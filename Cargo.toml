@@ -1,0 +1,10 @@
+[package]
+name = "mnist-nn-rs"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+ndarray = { version = "0.16.1", features = ["serde"] }
+ndarray-rand = "0.15.0"
+polars = { version = "0.47.0", features = ["lazy", "streaming", "ndarray"] }
+rand = "0.9.1"
