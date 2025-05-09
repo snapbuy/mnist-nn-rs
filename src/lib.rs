@@ -95,6 +95,58 @@ pub fn load_testing_data() -> Result<(Array2<f32>, Array2<f32>), Box<dyn Error>>
 
 
 
+pub fn load_saved_data() -> Result<(Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>), Box<dyn Error>> {
+    let q1 = LazyCsvReader::new("./final_config/w1.csv")
+    .with_has_header(true)
+    .finish()?;
+    let w1 = q1
+        .clone()
+        .with_streaming(true)
+        .collect()?;
+
+    let q2 = LazyCsvReader::new("./final_config/b1.csv")
+    .with_has_header(true)
+    .finish()?;
+    let b1 = q2
+        .clone()
+        .with_streaming(true)
+        .collect()?;
+
+    let q3 = LazyCsvReader::new("./final_config/w2.csv")
+    .with_has_header(true)
+    .finish()?;
+    let w2 = q3
+        .clone()
+        .with_streaming(true)
+        .collect()?;
+
+    let q4 = LazyCsvReader::new("./final_config/b2.csv")
+    .with_has_header(true)
+    .finish()?;
+    let b2 = q4
+        .clone()
+        .with_streaming(true)
+        .collect()?;
+
+    let w1_ndarray = w1
+        .to_ndarray::<Float32Type>(IndexOrder::Fortran)
+        .unwrap();
+    let b1_ndarray = b1
+        .to_ndarray::<Float32Type>(IndexOrder::Fortran)
+        .unwrap();
+    let w2_ndarray = w2
+        .to_ndarray::<Float32Type>(IndexOrder::Fortran)
+        .unwrap();
+    let b2_ndarray = b2
+        .to_ndarray::<Float32Type>(IndexOrder::Fortran)
+        .unwrap();
+    
+    Ok((w1_ndarray, b1_ndarray, w2_ndarray, b2_ndarray))
+}
+
+
+
+
 pub fn init_params()->(Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>){
     
     // ----------------------------
@@ -252,38 +304,41 @@ pub fn get_accuracy(predictions: &Array2<f32>, labels: &Array2<f32>) -> f32 {
 
 pub fn write_to_csv(w1: &Array2<f32>, b1: &Array2<f32>, w2: &Array2<f32>, b2: &Array2<f32>) {
     // Convert weights (w1, w2) and biases (b1, b2) to DataFrames
-    let mut w1_df = Array2ToDataFrame(w1, "w1");
-    let mut b1_df = Array2ToDataFrame(b1, "b1");
-    let mut w2_df = Array2ToDataFrame(w2, "w2");
-    let mut b2_df = Array2ToDataFrame(b2, "b2");
+    let mut w1_df = array2_to_data_frame(w1, "w1");
+    let mut b1_df = array2_to_data_frame(b1, "b1");
+    let mut w2_df = array2_to_data_frame(w2, "w2");
+    let mut b2_df = array2_to_data_frame(b2, "b2");
 
     let mut file = File::create("./final_config/w1.csv").expect("could not create file");
     CsvWriter::new(&mut file)
     .include_header(true)
     .with_separator(b',')
-    .finish(&mut w1_df);
+    .finish(&mut w1_df)
+    .expect("Failed to write w1 CSV file");
 
     let mut file = File::create("./final_config/b1.csv").expect("could not create file");
     CsvWriter::new(&mut file)
     .include_header(true)
     .with_separator(b',')
-    .finish(&mut b1_df);
+    .finish(&mut b1_df)
+    .expect("Failed to write b1 CSV file");
 
     let mut file = File::create("./final_config/w2.csv").expect("could not create file");
     CsvWriter::new(&mut file)
     .include_header(true)
     .with_separator(b',')
-    .finish(&mut w2_df);
+    .finish(&mut w2_df)
+    .expect("Failed to write w2 CSV file");
 
     let mut file = File::create("./final_config/b2.csv").expect("could not create file");
     CsvWriter::new(&mut file)
     .include_header(true)
     .with_separator(b',')
-    .finish(&mut b2_df);
+    .finish(&mut b2_df)
+    .expect("Failed to write b2 CSV file");
 }
 
-pub fn Array2ToDataFrame(array: &Array2<f32>, name: &str) -> DataFrame {
-    let rows = array.shape()[0];
+pub fn array2_to_data_frame(array: &Array2<f32>, name: &str) -> DataFrame {
     let cols = array.shape()[1];
 
     let mut columns: Vec<Column> = Vec::new();
