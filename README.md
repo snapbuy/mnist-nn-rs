@@ -1,7 +1,9 @@
 # MNIST Neural Network in Rust
 This is a from-scratch implementation of a feedforward neural network in Rust, built without using high-level machine learning libraries. 
 
-## Results for 200 iterations and learning rate = 0.1
+***`Detailed explanation of working given below.`***
+
+### Results for 200 iterations and learning rate = 0.1
 ```console
 DATA: 784, 60000
 LABELS: 1, 60000
@@ -23,7 +25,7 @@ Iteration: 200
 Accuracy: 78.56%
 ```
 
-## Results for 500 iterations and learning rate = 0.1
+### Results for 500 iterations and learning rate = 0.1
 ```console
 DATA: 784, 60000
 LABELS: 1, 60000
@@ -63,7 +65,31 @@ Iteration: 500
 Accuracy: 84.48%
 ```
 
-## It demonstrates:
+
+# Detailed explanation of working
+
+![image](https://github.com/user-attachments/assets/774af102-8731-4e89-9ebc-4244546eae36)
+
+---
+![image](https://github.com/user-attachments/assets/e70ae6c9-c1b7-405e-beee-4eaabbfc1790)
+
+---
+![image](https://github.com/user-attachments/assets/0584ddaf-e02d-41fd-aebb-d82b73fe4961)
+
+---
+![image](https://github.com/user-attachments/assets/bc91c226-130d-4b58-bd59-85deab6c2c41)
+
+---
+![image](https://github.com/user-attachments/assets/2aaceccc-c4fe-4266-8d90-4e6735fd9ace)
+
+---
+![image](https://github.com/user-attachments/assets/a8b4fb77-edbc-487e-8942-e154ab1cba7a)
+
+---
+![image](https://github.com/user-attachments/assets/882db8d2-e732-4518-a397-b9d9857c435c)
+
+
+### It demonstrates:
 
 - Manual forward and backward propagation
 - Use of ReLU and softmax activation functions
@@ -72,23 +98,23 @@ Accuracy: 84.48%
 - Accuracy evaluation
 - Model parameter export to CSV using polars
 
-## 🔧 Dependencies
+### 🔧 Dependencies
 - ndarray (store 2d array of data)
 - ndarray-rand (generate intial random weights(w) and biases(b))
 - polars (to read write data in csv)
 
-## 🧠 Model Overview
-- 1 Hidden layer neural network
+### 🧠 Model Overview
+- input layer, 1 hidden layer, output layer
 - Input: 784-dimensional MNIST images
-- Hidden layer: 10 neurons with ReLU
-- Output layer: 10 neurons with softmax
+- Hidden layer: 10 neurons with ReLU as activation function 
+- Output layer: 10 neurons with softmax as activation function for multi-class classification
 
-## 📂 Structure
+### 📂 Structure
 - `main.rs`: Training loop and evaluation
 - `lib.rs`: Core model logic — forward, backward, update, softmax, etc.
 - `final_config/`: Stores final weights and biases
 - `mnistdata/`: Contains input dataset
 
-## 📦 Dataset
+### 📦 Dataset
 Make sure the MNIST dataset is placed in mnistdata/.
 
