@@ -1,6 +1,8 @@
 # MNIST Neural Network in Rust
 This is a from-scratch implementation of a feedforward neural network in Rust, built without using high-level machine learning libraries. 
 
+Medium Blog: https://medium.com/@dkjain2005co/neural-network-in-rust-on-mnist-dataset-from-scratch-f42971eaead3
+
 ***`Detailed explanation of working given below.`***
 
 ### Results for 200 iterations and learning rate = 0.1
